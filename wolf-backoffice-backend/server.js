@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 // Import Routes
 const authRoutes = require("./routes/auth");
 const verifyToken = require("./middleware/authMiddleware");
+const customerRoutes = require("./routes/customers"); // Import customers route
 
 const app = express();
 app.use(cors());
@@ -20,15 +21,19 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB connected"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-// ✅ Authentication Routes
+// Authentication Routes
 app.use("/api/auth", authRoutes);
 
-// ✅ Protected Route Example
+// ✅ API Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/customers", customerRoutes); // ✅ Customers API
+
+// Protected Route Example
 app.get("/api/protected", verifyToken, (req, res) => {
     res.json({ message: `Welcome, ${req.user.username}! This is a protected route.` });
 });
 
-// ✅ Appointment Routes (Mock Example)
+// Appointment Routes (Mock Example)
 app.get("/api/appointments", verifyToken, (req, res) => {
     res.json([
         { title: "Doctor Visit", date: "2024-06-30" },
@@ -36,7 +41,7 @@ app.get("/api/appointments", verifyToken, (req, res) => {
     ]);
 });
 
-// ✅ Customer Routes (Mock Example)
+// Customer Routes (Mock Example)
 app.get("/api/customers", verifyToken, (req, res) => {
     res.json([
         { id: 1, first_name: "John", last_name: "Doe", email: "john@example.com" },
@@ -44,6 +49,6 @@ app.get("/api/customers", verifyToken, (req, res) => {
     ]);
 });
 
-// ✅ Start Server
+// Start Server
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
