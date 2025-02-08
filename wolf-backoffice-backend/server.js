@@ -24,7 +24,7 @@ mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000, // ✅ Prevents long startup delays
 })
-    .then(() => console.log("MongoDB connected"))
+    .then(() => console.log("MongoDB connected successfully!"))
     .catch(err => console.error("MongoDB connection error:", err));
 
 // Authentication Routes
