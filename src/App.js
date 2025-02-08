@@ -1,19 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppointmentScheduler from "./components/AppointmentScheduler";
-import Calendar from "./components/Calendar";
-import CustomerDetails from "./components/CustomerDetails";
-import CustomerCRM from "./components/CustomerCRM";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useState } from "react";
+import Login from "./components/Login";  // ✅ Import from /src/components
+import Appointments from "./components/Appointments";
 import Dashboard from "./components/Dashboard";
 
 function App() {
+  const [authToken, setAuthToken] = useState(localStorage.getItem("token") || "");
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/appointments" element={<AppointmentScheduler />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/customers/:id" element={<CustomerDetails />} />
-        <Route path="/crm" element={<CustomerCRM />} />
+        <Route path="/" element={authToken ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
+        <Route path="/appointments" element={authToken ? <Appointments /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
