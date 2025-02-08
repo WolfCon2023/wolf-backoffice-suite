@@ -5,6 +5,10 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
+// Import Models
+require("./models/User");
+require("./models/Appointment");
+
 // Import Routes
 const authRoutes = require("./routes/auth");
 const verifyToken = require("./middleware/authMiddleware");
@@ -14,7 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ Connect to MongoDB
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -24,9 +28,9 @@ mongoose.connect(process.env.MONGO_URI, {
 // Authentication Routes
 app.use("/api/auth", authRoutes);
 
-// ✅ API Routes
+// API Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/customers", customerRoutes); // ✅ Customers API
+app.use("/api/customers", customerRoutes); // Customers API
 
 // Protected Route Example
 app.get("/api/protected", verifyToken, (req, res) => {
