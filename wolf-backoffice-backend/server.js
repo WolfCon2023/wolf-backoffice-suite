@@ -32,6 +32,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/customers", customerRoutes); // Customers API
 
+//User Route
+const userRoutes = require("./routes/users");
+app.use("/api/users", userRoutes);
+
+
 // Protected Route Example
 app.get("/api/protected", verifyToken, (req, res) => {
     res.json({ message: `Welcome, ${req.user.username}! This is a protected route.` });
