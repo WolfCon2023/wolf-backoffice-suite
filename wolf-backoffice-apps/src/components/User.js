@@ -5,13 +5,19 @@ const User = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    console.log("Fetching users from:", process.env.REACT_APP_API_BASE_URL);
+    const apiUrl = `${process.env.REACT_APP_API_BASE_URL}/users`;
+    console.log("Fetching users from API:", apiUrl);
 
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/users`, {
+    axios.get(apiUrl, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
     })
-    .then(response => setUsers(response.data))
-    .catch(error => console.error("Error fetching users:", error));
+    .then(response => {
+      console.log("Fetched users:", response.data);
+      setUsers(response.data);
+    })
+    .catch(error => {
+      console.error("Error fetching users:", error);
+    });
   }, []);
 
   return (
