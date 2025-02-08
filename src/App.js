@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
-import Login from "./components/Login";  // ✅ Import from /src/components
+import Login from "./components/Login";
 import Appointments from "./components/Appointments";
 import Dashboard from "./components/Dashboard";
 
