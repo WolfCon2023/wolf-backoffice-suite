@@ -6,12 +6,12 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.4.3",
-    "react-scripts": "^5.0.1"  // ✅ Ensure this is present
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postinstall": "npm install && npm run build",  // ✅ Ensures Railway installs dependencies before build
+    "postinstall": "npm install && npm run build",
     "serve": "serve -s build"
   },
   "engines": {
