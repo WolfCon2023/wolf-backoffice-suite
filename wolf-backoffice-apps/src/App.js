@@ -8,6 +8,8 @@ import User from "./components/User";  // ✅ Import User component
 function App() {
   const [authToken, setAuthToken] = useState(localStorage.getItem("token") || "");
 
+  console.log("Auth Token:", authToken);  // ✅ Log the authToken to check its value
+
   return (
     <Router>
       <Routes>
