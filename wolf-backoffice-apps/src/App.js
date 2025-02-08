@@ -14,6 +14,7 @@ function App() {
         <Route path="/" element={authToken ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
         <Route path="/appointments" element={authToken ? <Appointments /> : <Navigate to="/login" />} />
+        <Route path="/users" element={authToken ? <User /> : <Navigate to="/login" />} />  {/* ✅ Added User Route */}
       </Routes>
     </Router>
   );
