@@ -19,7 +19,7 @@ UserSchema.pre("save", async function (next) {
         console.log("✅ Password hashed successfully.");
         next();
     } catch (error) {
-        console.error("❌ Error hashing password:", error);
+        console.error("Error hashing password:", error);
         next(error);
     }
 });
