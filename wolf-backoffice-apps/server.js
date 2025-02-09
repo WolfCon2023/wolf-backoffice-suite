@@ -18,6 +18,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Set the port for Express (use 3000 by default)
+const port = process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+    res.send("Server is running on port " + port);
+});
+
+// Start the Express server
+app.listen(port, () => {
+    console.log(`🚀 Server running on port ${port}`);
+});
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
