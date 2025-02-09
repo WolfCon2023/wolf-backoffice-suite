@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Copy package.json and package-lock.json first (for caching layers)
-COPY package.json package-lock.json ./
+COPY package.json ./
 
 # Install dependencies efficiently
 RUN npm ci --prefer-offline
