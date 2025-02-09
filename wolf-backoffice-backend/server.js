@@ -12,32 +12,35 @@ require("./models/Appointment");
 // Import Routes
 const authRoutes = require("./routes/auth");
 const verifyToken = require("./middleware/authMiddleware");
-const customerRoutes = require("./routes/customers"); // Import customers route
+const customerRoutes = require("./routes/customers"); 
+const userRoutes = require("./routes/users");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Set the port for Express (use 3000 by default)
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000, // ✅ Prevents long startup delays
-})
-    .then(() => console.log("MongoDB connected successfully!"))
-    .catch(err => console.error("MongoDB connection error:", err));
+}).then(() => console.log("✅ MongoDB connected successfully!"))
+  .catch(err => console.error("❌ MongoDB connection error:", err));
+
+// Base Route
+app.get("/", (req, res) => {
+    res.send("🚀 Backend Server is running on port " + port);
+});
 
 // Authentication Routes
 app.use("/api/auth", authRoutes);
 
 // API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/customers", customerRoutes); // Customers API
-
-//User Route
-const userRoutes = require("./routes/users");
-app.use("/api/users", userRoutes);
-
+app.use("/api/customers", customerRoutes);
+app.use("/api/users", userRoutes); // ✅ Added user routes
 
 // Protected Route Example
 app.get("/api/protected", verifyToken, (req, res) => {
@@ -60,17 +63,14 @@ app.get("/api/customers", verifyToken, (req, res) => {
     ]);
 });
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}).then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
+// Global Error Handling
+process.on("uncaughtException", (err) => {
+  console.error("❌ Uncaught Exception:", err);
+});
 
-// API Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/customers", customerRoutes);
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("❌ Unhandled Rejection:", reason);
+});
 
-// Start Server
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+// Start Express Server
+app.listen(port, () => console.log(`🚀 Backend server running on port ${port}`));
