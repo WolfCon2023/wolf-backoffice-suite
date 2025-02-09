@@ -3,7 +3,7 @@ FROM node:18
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm install --no-cache
+RUN npm ci --prefer-offline
 
 COPY . .
 
