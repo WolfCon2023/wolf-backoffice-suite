@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json ./
 
 # Install dependencies efficiently
-RUN npm ci --prefer-offline
+RUN npm install --force
 
 # Copy all files to container
 COPY . .
